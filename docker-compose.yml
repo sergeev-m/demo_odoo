@@ -6,13 +6,9 @@ x-odoo-common:
     - demo-odoo-web-data:/var/lib/odoo
     - ./addons:/mnt/extra-addons
     - ./conf:/etc/odoo
-#    - $HOME/supply-chain-smart-contract/addons:/mnt/extra-addons
-#    - $HOME/backups:/mnt/backups
     - ./wait-for-postgres.sh:/usr/local/bin/wait-for-postgres.sh
-    # - ./grpc_core:/usr/local/bin/grpc_core
-    # - ./grpc_server.py:/usr/local/bin/grpc_server.py
   depends_on:
-    - test_odoo_db
+    - demo_odoo_db
   networks:
     dev-net:
   logging:
