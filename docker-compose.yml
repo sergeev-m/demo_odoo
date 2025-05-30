@@ -8,8 +8,8 @@ x-odoo-common: &odoo-common
     - ./wait-for-postgres.sh:/usr/local/bin/wait-for-postgres.sh
   depends_on:
     - demo_odoo_db
-  networks:
-    dev-net:
+  # networks:
+    # dev-net:
   logging:
       driver: "json-file"
       options:
@@ -20,9 +20,9 @@ volumes:
   demo-odoo-web-data:
   demo-odoo-db-data:
 
-networks:
-  dev-net:
-    external: true
+# networks:
+#   dev-net:
+#     external: true
 
 services:
   demo_odoo_db:
@@ -37,12 +37,12 @@ services:
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo
       - PGDATA=/var/lib/postgresql/data/pgdata
-    ports:
-      - 5432:5432
-    networks:
-      dev-net:
-        aliases:
-          - demo_odoo_db
+    # ports:
+      # - 5432:5432
+    # networks:
+    #   dev-net:
+    #     aliases:
+    #       - demo_odoo_db
   demo_odoo:
     <<: *odoo-common
     container_name: demo_odoo
