@@ -2,9 +2,10 @@ FROM odoo:18
 
 USER root
 
-RUN apt-get update; apt-get install -y locales;\
-    mkdir -p /usr/share/man/man1; \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update; apt-get install -y locales \
+    && echo "nameserver 8.8.8.8" > /etc/resolv.conf \
+    && mkdir -p /usr/share/man/man1 \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /home/odoo
 
