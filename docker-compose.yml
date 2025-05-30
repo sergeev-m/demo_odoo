@@ -1,5 +1,4 @@
-x-odoo-common:
-  &odoo-common
+x-odoo-common: &odoo-common
   image: demo_odoo:18
   restart: always
   volumes:
