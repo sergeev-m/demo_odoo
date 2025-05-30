@@ -14,7 +14,7 @@ RUN pip3 install -r /home/odoo/requirements.txt --break-system-packages
 
 USER odoo
 
-ENV SHELL /bin/bash
+ENV SHELL=/bin/bash
 
 ENTRYPOINT ["/entrypoint.sh"]
 
