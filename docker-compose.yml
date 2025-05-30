@@ -46,7 +46,7 @@ services:
   demo_odoo:
     <<: *odoo-common
     container_name: demo_odoo
-    build: .
+    # build: .
     command: [ "/usr/local/bin/wait-for-postgres.sh" ]
     # ports:
       # - "8069:8069"
