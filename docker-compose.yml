@@ -1,5 +1,5 @@
 x-odoo-common: &odoo-common
-  image: demo_odoo
+  image: demo_odoo:latest
   restart: always
   volumes:
     - demo-odoo-web-data:/var/lib/odoo
