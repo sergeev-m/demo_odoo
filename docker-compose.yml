@@ -1,0 +1,57 @@
+x-odoo-common:
+  &odoo-common
+  image: demo_odoo:18
+  restart: always
+  volumes:
+    - demo-odoo-web-data:/var/lib/odoo
+    - ./addons:/mnt/extra-addons
+    - ./conf:/etc/odoo
+#    - $HOME/supply-chain-smart-contract/addons:/mnt/extra-addons
+#    - $HOME/backups:/mnt/backups
+    - ./wait-for-postgres.sh:/usr/local/bin/wait-for-postgres.sh
+    # - ./grpc_core:/usr/local/bin/grpc_core
+    # - ./grpc_server.py:/usr/local/bin/grpc_server.py
+  depends_on:
+    - test_odoo_db
+  networks:
+    dev-net:
+  logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+volumes:
+  demo-odoo-web-data:
+  demo-odoo-db-data:
+
+networks:
+  dev-net:
+    external: true
+
+services:
+  demo_odoo_db:
+    container_name: demo_odoo_db
+    image: postgres:16
+    restart: always
+    volumes:
+      - test-odoo-db-data:/var/lib/postgresql/data/pgdata
+      # - ./sql/init-postgis.sql:/docker-entrypoint-initdb.d/init-postgis.sql
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+    networks:
+      dev-net:
+        aliases:
+          - demo_odoo_db
+  demo_odoo:
+    <<: *odoo-common
+    container_name: demo_odoo
+    build: .
+    command: [ "/usr/local/bin/wait-for-postgres.sh" ]
+    # ports:
+      # - "8069:8069"
